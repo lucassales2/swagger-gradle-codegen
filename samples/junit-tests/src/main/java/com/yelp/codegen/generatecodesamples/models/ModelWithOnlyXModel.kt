@@ -14,7 +14,7 @@ import com.squareup.moshi.JsonClass
  */
 @JsonClass(generateAdapter = true)
 data class ModelWithOnlyXModel(
-    @Json(name = "xmodel_only") @field:Json(name = "xmodel_only") var xmodelOnly: ModelWithOnlyXModel.XmodelOnlyEnum? = null
+    @Json(name = "xmodel_only") @field:Json(name = "xmodel_only") val xmodelOnly: ModelWithOnlyXModel.XmodelOnlyEnum? = null
 ) {
     /**
      * Values: VAL1, VAL2

@@ -14,7 +14,7 @@ import com.squareup.moshi.JsonClass
  */
 @JsonClass(generateAdapter = true)
 data class InlineResponse200(
-    @Json(name = "no_xmodel_no_title") @field:Json(name = "no_xmodel_no_title") var noXmodelNoTitle: InlineResponse200.NoXmodelNoTitleEnum? = null
+    @Json(name = "no_xmodel_no_title") @field:Json(name = "no_xmodel_no_title") val noXmodelNoTitle: InlineResponse200.NoXmodelNoTitleEnum? = null
 ) {
     /**
      * Values: VAL1, VAL2

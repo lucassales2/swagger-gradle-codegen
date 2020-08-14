@@ -14,7 +14,7 @@ import com.squareup.moshi.JsonClass
  */
 @JsonClass(generateAdapter = true)
 data class ModelWithXModelAndTitle(
-    @Json(name = "xmodel_and_title") @field:Json(name = "xmodel_and_title") var xmodelAndTitle: ModelWithXModelAndTitle.XmodelAndTitleEnum? = null
+    @Json(name = "xmodel_and_title") @field:Json(name = "xmodel_and_title") val xmodelAndTitle: ModelWithXModelAndTitle.XmodelAndTitleEnum? = null
 ) {
     /**
      * Values: VAL1, VAL2

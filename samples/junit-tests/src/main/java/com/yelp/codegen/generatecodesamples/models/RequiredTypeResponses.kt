@@ -19,11 +19,11 @@ import java.math.BigDecimal
  */
 @JsonClass(generateAdapter = true)
 data class RequiredTypeResponses(
-    @Json(name = "boolean_property") @field:Json(name = "boolean_property") var booleanProperty: Boolean,
-    @Json(name = "enum_property") @field:Json(name = "enum_property") var enumProperty: RequiredTypeResponses.EnumPropertyEnum,
-    @Json(name = "integer_property") @field:Json(name = "integer_property") var integerProperty: Int,
-    @Json(name = "number_property") @field:Json(name = "number_property") var numberProperty: BigDecimal,
-    @Json(name = "string_property") @field:Json(name = "string_property") var stringProperty: String
+    @Json(name = "boolean_property") @field:Json(name = "boolean_property") val booleanProperty: Boolean,
+    @Json(name = "enum_property") @field:Json(name = "enum_property") val enumProperty: RequiredTypeResponses.EnumPropertyEnum,
+    @Json(name = "integer_property") @field:Json(name = "integer_property") val integerProperty: Int,
+    @Json(name = "number_property") @field:Json(name = "number_property") val numberProperty: BigDecimal,
+    @Json(name = "string_property") @field:Json(name = "string_property") val stringProperty: String
 ) {
     /**
      * Values: VALUE1, VALUE2
