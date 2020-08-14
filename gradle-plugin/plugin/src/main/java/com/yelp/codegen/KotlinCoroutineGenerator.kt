@@ -1,5 +1,6 @@
 package com.yelp.codegen
 
+import io.swagger.codegen.CodegenModel
 import io.swagger.codegen.CodegenOperation
 import io.swagger.models.Model
 import io.swagger.models.Operation
@@ -13,9 +14,9 @@ open class KotlinCoroutineGenerator : KotlinGenerator() {
 
     override fun getName() = "kotlin-coroutines"
 
-    override fun wrapResponseType(imports: MutableSet<String>, responsePrimitiveType: String) = responsePrimitiveType
+    override fun wrapResponseType(imports: MutableSet<String>, responsePrimitiveType: String) = "Response<${responsePrimitiveType}>"
 
-    override fun getNoResponseType(imports: MutableSet<String>) = "Unit"
+    override fun getNoResponseType(imports: MutableSet<String>) = "Response<Void>"
 
     /**
      * Overriding the behavior of [KotlinGenerator] to make sure operations are rendered as `suspend fun` rather
@@ -30,6 +31,7 @@ open class KotlinCoroutineGenerator : KotlinGenerator() {
     ): CodegenOperation {
         val codegenOperation = super.fromOperation(path, httpMethod, operation, definitions, swagger)
         codegenOperation.vendorExtensions[X_FUNCTION_QUALIFIERS] = "suspend"
+        codegenOperation.imports.add("retrofit2.Response")
         return codegenOperation
     }
 }
