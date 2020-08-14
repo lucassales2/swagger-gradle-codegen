@@ -12,24 +12,27 @@ android {
         versionCode = 1
         versionName = "1.0"
     }
+    compileOptions {
+        coreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.61")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.70")
 
     // Moshi + OkHttp + Retrofit
     implementation("com.squareup.moshi:moshi:1.9.2")
     implementation("com.squareup.moshi:moshi-adapters:1.9.2")
-    implementation("com.squareup.moshi:moshi-kotlin:1.9.2")
     implementation("com.squareup.okhttp3:okhttp:3.12.3")
     implementation("com.squareup.retrofit2:retrofit:2.7.1")
     implementation("com.squareup.retrofit2:converter-moshi:2.7.1")
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.7.1")
 
-    // Date Support
-    implementation("com.jakewharton.threetenabp:threetenabp:1.2.2")
+    // Date Support via Desugaring
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.0.9")
 
     // RxJava
     implementation("io.reactivex.rxjava2:rxjava:2.2.17")
@@ -37,14 +40,14 @@ dependencies {
 }
 
 generateSwagger {
-    platform = "kotlin"
-    packageName = "com.yelp.codegen.samples"
-    specName = "sample_specs"
-    specVersion = "1.0.0"
-    inputFile = file("../sample_specs.json")
-    outputDir = file("./src/main/java/")
+    platform.set("kotlin")
+    packageName.set("com.yelp.codegen.samples")
+    specName.set("sample_specs")
+    specVersion.set("1.0.0")
+    inputFile.set(file("../sample_specs.json"))
+    outputDir.set(project.layout.projectDirectory.dir("./src/main/java/"))
     features {
-        headersToRemove = arrayOf("Accept-Language")
+        headersToRemove.add("Accept-Language")
     }
 }
 

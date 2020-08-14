@@ -7,12 +7,12 @@ import io.swagger.codegen.CodegenProperty
 import io.swagger.models.Info
 import io.swagger.models.Operation
 import io.swagger.models.Swagger
-import java.io.File
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.io.File
 
 class KotlinGeneratorTest {
 
@@ -244,8 +244,8 @@ class KotlinGeneratorTest {
     @Test
     fun toModelName_withImportMapping() {
         val generator = KotlinGenerator()
-        generator.importMapping()["threeten"] = "org.threeten.bp.LocalDate"
-        assertEquals("threeten", generator.toModelName("threeten"))
+        generator.importMapping()["Instant"] = "java.time.Instant"
+        assertEquals("Instant", generator.toModelName("Instant"))
     }
 
     @Test
@@ -380,12 +380,27 @@ class KotlinGeneratorTest {
     }
 
     @Test
+    fun processTopLevelHeaders_withOperationIdAndHeadersToIgnore_hasNoHeaders() {
+        val testOperationId = "aTestOperationId"
+        val generator = KotlinGenerator()
+        val operation = CodegenOperation()
+        generator.additionalProperties()[HEADERS_TO_IGNORE] = HEADER_X_OPERATION_ID
+        operation.vendorExtensions = mutableMapOf(X_OPERATION_ID to (testOperationId as Any))
+
+        generator.processTopLevelHeaders(operation)
+
+        assertEquals(false, operation.vendorExtensions["hasOperationHeaders"])
+        val headerMap = operation.vendorExtensions["operationHeaders"] as List<*>
+        assertEquals(0, headerMap.size)
+    }
+
+    @Test
     fun processTopLevelHeaders_withConsumes_hasContentTypeHeader() {
         val generator = KotlinGenerator()
         val operation = CodegenOperation()
         operation.vendorExtensions = mutableMapOf()
         operation.consumes = listOf(
-                mapOf("mediaType" to "application/json")
+            mapOf("mediaType" to "application/json")
         )
 
         generator.processTopLevelHeaders(operation)
@@ -399,13 +414,30 @@ class KotlinGeneratorTest {
     }
 
     @Test
+    fun processTopLevelHeaders_withConsumesAndHeadersToIgnore_hasNoContentTypeHeader() {
+        val generator = KotlinGenerator()
+        val operation = CodegenOperation()
+        generator.additionalProperties()[HEADERS_TO_IGNORE] = HEADER_CONTENT_TYPE
+        operation.vendorExtensions = mutableMapOf()
+        operation.consumes = listOf(
+            mapOf("mediaType" to "application/json")
+        )
+
+        generator.processTopLevelHeaders(operation)
+
+        assertEquals(false, operation.vendorExtensions["hasOperationHeaders"])
+        val headerMap = operation.vendorExtensions["operationHeaders"] as List<*>
+        assertEquals(0, headerMap.size)
+    }
+
+    @Test
     fun processTopLevelHeaders_withFormParams_hasNoContentTypeHeader() {
         val generator = KotlinGenerator()
         val operation = CodegenOperation()
         operation.vendorExtensions = mutableMapOf()
         operation.formParams = listOf(CodegenParameter())
         operation.consumes = listOf(
-                mapOf("mediaType" to "application/json")
+            mapOf("mediaType" to "application/json")
         )
 
         generator.processTopLevelHeaders(operation)
@@ -420,7 +452,7 @@ class KotlinGeneratorTest {
         val operation = CodegenOperation()
         operation.vendorExtensions = mutableMapOf(X_OPERATION_ID to (testOperationId as Any))
         operation.consumes = listOf(
-                mapOf("mediaType" to "application/json")
+            mapOf("mediaType" to "application/json")
         )
 
         generator.processTopLevelHeaders(operation)
