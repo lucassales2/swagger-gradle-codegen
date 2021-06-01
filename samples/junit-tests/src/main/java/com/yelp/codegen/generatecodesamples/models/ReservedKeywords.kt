@@ -11,6 +11,7 @@ import com.squareup.moshi.JsonClass
 
 /**
  * @property `class`
+ * @property `data`
  * @property `for`
  * @property `operator`
  * @property `val`
@@ -20,6 +21,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class ReservedKeywords(
     @Json(name = "class") @field:Json(name = "class") val `class`: String? = null,
+    @Json(name = "data") @field:Json(name = "data") var `data`: String? = null,
     @Json(name = "for") @field:Json(name = "for") val `for`: String? = null,
     @Json(name = "operator") @field:Json(name = "operator") val `operator`: String? = null,
     @Json(name = "val") @field:Json(name = "val") val `val`: String? = null,
