@@ -2,7 +2,6 @@
 .gradle
 .idea/
 build/
-java_pid*.hprof
 local.properties
 out/
 venv/

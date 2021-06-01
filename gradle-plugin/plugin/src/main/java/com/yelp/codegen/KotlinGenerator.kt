@@ -206,13 +206,13 @@ open class KotlinGenerator : SharedCodegen() {
     internal fun addRequiredImports(codegenModel: CodegenModel) {
         // If there are any vars, we will mark them with the @Json annotation so we have to make sure to import it
         if (codegenModel.allVars.isNotEmpty() || codegenModel.isEnum) {
-            codegenModel.imports.add("com.squareup.moshi.Json")
+            codegenModel.imports.add("com.google.gson.annotations.SerializedName")
         }
 
         if (!codegenModel.isAlias) {
             // If we are rendering a model (or enum) we are annotating it with @JsonClass,
             // so we need to make sure that we're importing it
-            codegenModel.imports.add("com.squareup.moshi.JsonClass")
+            // codegenModel.imports.add("com.squareup.moshi.JsonClass")
         }
 
         // Add import for @XNullable annotation if there are any XNullable properties
